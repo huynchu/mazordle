@@ -38,11 +38,11 @@ const horzWalls = Array(row - 1)
 
 // Function to generate maze
 const stepThroughCell = (currRow, currCol) => {
-  // If i have visted cell at [row,col], return
+  // Visted cell at [row,col], return
   if (mazeArray[currRow][currCol]) {
     return;
   }
-  // Mark this cell as visted
+  // Else mark this cell as visted
   mazeArray[currRow][currCol] = true;
 
   // Assemble random ordered-list of neighbours

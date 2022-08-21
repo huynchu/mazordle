@@ -89,9 +89,52 @@ stepThroughCell(startRow, startCol);
 console.log(mazeArray);
 console.log(vertWalls);
 console.log(horzWalls);
+// convert to blockwise representation 
+const blocwise = (MA, VW, HW) => {
 
-// fill mazeArray with tile objs
-// ...
+  const n = MA.length;
+  const row = 2*n;
+  const col = 2*n;
+  const ret = Array(row)
+  .fill(null)
+  .map(() => Array(col).fill(null));
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      ret[2*i][2*j] = true;
+      ret[2*i+1][2*j+1] = false;
+      if (i === n-1) {
+        ret[2*i+1][2*j] = false;
+      }
+      else if (HW[i][j] === false) {
+        ret[2*i+1][2*j] = false;
+      }
+      if (j === n-1) {
+        ret[2*i][2*j+1] = false;
+      }
+      else if (VW[i][j] === false) {
+        ret[2*i][2*j+1] = false;
+      }
+    }
+  }
+  console.log(ret);
+  return ret;
+}
+
+const ret = blocwise(mazeArray,vertWalls,horzWalls);
+for (let row of ret) {
+  const line = "";
+  for (let col of row) {
+    if (ret[col][row]) {
+      line += 'x';
+    }
+    else {
+      line += 'o';
+    }
+  }
+  console.log(line);
+}
+
 
 // loop thought mazeArray with each tile obj and render it in html, add an click event listener to each tile
 // ...

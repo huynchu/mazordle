@@ -90,9 +90,7 @@ console.log(mazeArray);
 console.log(vertWalls);
 console.log(horzWalls);
 // convert to blockwise representation 
-const blocwise = (MA, VW, HW) => {
-
-  const n = MA.length;
+const blocwise = (n, VW, HW) => {
   const row = 2*n;
   const col = 2*n;
   const ret = Array(row)
@@ -109,27 +107,34 @@ const blocwise = (MA, VW, HW) => {
       else if (HW[i][j] === false) {
         ret[2*i+1][2*j] = false;
       }
+      else 
+        ret[2*i+1][2*j] = true;
       if (j === n-1) {
         ret[2*i][2*j+1] = false;
       }
       else if (VW[i][j] === false) {
         ret[2*i][2*j+1] = false;
       }
+      else 
+        ret[2*i][2*j+1] = true;
     }
   }
   console.log(ret);
   return ret;
 }
 
-const ret = blocwise(mazeArray,vertWalls,horzWalls);
+const ret = blocwise(mazeArray.length,vertWalls,horzWalls);
 for (let row of ret) {
-  const line = "";
+  let line = "";
   for (let col of row) {
-    if (ret[col][row]) {
-      line += 'x';
+    if (col === null) {
+      line += 'N';
+    }
+    else if (col) {
+      line += 'T';
     }
     else {
-      line += 'o';
+      line += 'F';
     }
   }
   console.log(line);

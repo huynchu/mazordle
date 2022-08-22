@@ -1,0 +1,10 @@
+.tile {
+  width: 100px;
+  height: 100px;
+}
+
+.row {
+  height: 100px;
+  width: 100%;
+  display: flex;
+}

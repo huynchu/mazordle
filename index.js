@@ -119,6 +119,10 @@ const blocwise = (n, VW, HW) => {
         ret[2*i][2*j+1] = true;
     }
   }
+  for (let row of ret) {
+    row.unshift(false);
+  }
+  ret.unshift(Array(2*n+1).fill(false));
   console.log(ret);
   return ret;
 }
@@ -139,6 +143,7 @@ for (let row of ret) {
   }
   console.log(line);
 }
+
 
 
 // loop thought mazeArray with each tile obj and render it in html, add an click event listener to each tile

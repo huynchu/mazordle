@@ -38,11 +38,11 @@ const horzWalls = Array(row - 1)
 
 // Function to generate maze
 const stepThroughCell = (currRow, currCol) => {
-  // If i have visted cell at [row,col], return
+  // Visted cell at [row,col], return
   if (mazeArray[currRow][currCol]) {
     return;
   }
-  // Mark this cell as visted
+  // Else mark this cell as visted
   mazeArray[currRow][currCol] = true;
 
   // Assemble random ordered-list of neighbours
@@ -89,34 +89,28 @@ stepThroughCell(startRow, startCol);
 console.log(mazeArray);
 console.log(vertWalls);
 console.log(horzWalls);
-// convert to blockwise representation 
-const blocwise = (n, VW, HW) => {
-  const row = 2*n;
-  const col = 2*n;
+// convert to blockwise representation
+const blockWise = (n, VW, HW) => {
+  const row = 2 * n;
+  const col = 2 * n;
   const ret = Array(row)
-  .fill(null)
-  .map(() => Array(col).fill(null));
+    .fill(null)
+    .map(() => Array(col).fill(null));
 
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) {
-      ret[2*i][2*j] = true;
-      ret[2*i+1][2*j+1] = false;
-      if (i === n-1) {
-        ret[2*i+1][2*j] = false;
-      }
-      else if (HW[i][j] === false) {
-        ret[2*i+1][2*j] = false;
-      }
-      else 
-        ret[2*i+1][2*j] = true;
-      if (j === n-1) {
-        ret[2*i][2*j+1] = false;
-      }
-      else if (VW[i][j] === false) {
-        ret[2*i][2*j+1] = false;
-      }
-      else 
-        ret[2*i][2*j+1] = true;
+      ret[2 * i][2 * j] = true;
+      ret[2 * i + 1][2 * j + 1] = false;
+      if (i === n - 1) {
+        ret[2 * i + 1][2 * j] = false;
+      } else if (HW[i][j] === false) {
+        ret[2 * i + 1][2 * j] = false;
+      } else ret[2 * i + 1][2 * j] = true;
+      if (j === n - 1) {
+        ret[2 * i][2 * j + 1] = false;
+      } else if (VW[i][j] === false) {
+        ret[2 * i][2 * j + 1] = false;
+      } else ret[2 * i][2 * j + 1] = true;
     }
   }
   for (let row of ret) {
@@ -125,29 +119,55 @@ const blocwise = (n, VW, HW) => {
   ret.unshift(Array(2*n+1).fill(false));
   console.log(ret);
   return ret;
-}
+};
 
-const ret = blocwise(mazeArray.length,vertWalls,horzWalls);
-for (let row of ret) {
-  let line = "";
-  for (let col of row) {
-    if (col === null) {
-      line += 'N';
-    }
-    else if (col) {
-      line += 'T';
-    }
-    else {
-      line += 'F';
-    }
-  }
-  console.log(line);
-}
+const blockMaze = blockWise(mazeArray.length, vertWalls, horzWalls);
 
-
+// for (let row of blockMaze) {
+//   let line = "";
+//   for (let col of row) {
+//     if (col === null) {
+//       line += "N";
+//     } else if (col) {
+//       line += "T";
+//     } else {
+//       line += "F";
+//     }
+//   }
+//   console.log(line);
+// }
 
 // loop thought mazeArray with each tile obj and render it in html, add an click event listener to each tile
 // ...
+// Creating tile obj
+blockMaze.forEach((row, rowIndex) => {
+  row.forEach((isPath, colIndex) => {
+    blockMaze[rowIndex][colIndex] = {
+      isPath,
+      rowIndex,
+      colIndex,
+      revealed: false,
+    };
+  });
+});
+
+// loop thought mazeArray with each tile obj and render it in html
+const root = document.querySelector("#maze-game");
+
+blockMaze.forEach((row, rowIndex) => {
+  const rowDiv = document.createElement("div");
+  rowDiv.id = `row-${rowIndex}`;
+  rowDiv.classList.add("row");
+  row.forEach((tile, colIndex) => {
+    const { isPath, revealed } = tile;
+    const tileDiv = document.createElement("div");
+    tileDiv.id = `col-${colIndex}`;
+    tileDiv.classList.add("tile");
+    tileDiv.style.backgroundColor = isPath === true ? "#FFFFFF" : "#000000";
+    rowDiv.appendChild(tileDiv);
+  });
+  root.appendChild(rowDiv);
+});
 
 // logic to play the game
 //....

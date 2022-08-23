@@ -67,7 +67,7 @@ blockMaze.forEach((row, rowIndex) => {
     const tileDiv = document.createElement("div");
     tileDiv.id = `col-${colIndex}`;
     tileDiv.classList.add("tile");
-    tileDiv.style.backgroundColor = isPath === true ? "#FFFFFF" : "#000000";
+    tileDiv.style.backgroundColor = "#A4A4A4"; //isPath === true ? "#FFFFFF" : "#000000";
     rowDiv.appendChild(tileDiv);
   });
   root.appendChild(rowDiv);
@@ -82,12 +82,13 @@ while (!blockMaze[startY][startX]["isPath"]) {
   startX = Math.floor(Math.random() * (blockMaze[0].length - 1));
   startY = Math.floor(Math.random() * (blockMaze.length - 1));
 }
+
 let path = Array();
 let currCell = document.querySelector(`#row-${startY} #col-${startX}`);
-currCell.style.backgroundColor = "#0096FF";
+currCell.style.backgroundColor = "#FFFFFF";
 
 let [exitX, exitY] = pickRandomEdgeTile(blockMaze);
-while (!hasPath(exitX,exitY,blockMaze)) {
+while (!hasPath(exitX, exitY, blockMaze)) {
   [exitX, exitY] = pickRandomEdgeTile(blockMaze);
 }
 const exitTile = document.querySelector(`#row-${exitY} #col-${exitX}`);

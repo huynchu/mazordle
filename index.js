@@ -100,6 +100,7 @@ let currY = startY;
 let nextCell;
 document.addEventListener('keydown', function(e) {
   if(e.key === 'w') {
+    hasWon(currX,currY-1,exitX,exitY);
     if (blockMaze[currY-1][currX].isPath === true) {
       swap(currX,currY,currX,currY-1);
       path.push([currX,currY-1]);
@@ -107,6 +108,7 @@ document.addEventListener('keydown', function(e) {
     }
   }
   else if(e.key === 'a') {
+    hasWon(currX-1,currY,exitX,exitY);
     if (blockMaze[currY][currX-1].isPath === true) {
       swap(currX,currY,currX-1,currY);
       path.push([currX-1,currY]);
@@ -115,6 +117,7 @@ document.addEventListener('keydown', function(e) {
 
   }
   else if(e.key === 's') {
+    hasWon(currX,currY+1,exitX,exitY);
     if (blockMaze[currY+1][currX].isPath === true) {
       swap(currX,currY,currX,currY+1);
       path.push([currX,currY+1]);
@@ -122,6 +125,7 @@ document.addEventListener('keydown', function(e) {
     }
   }
   else if(e.key === 'd') {
+    hasWon(currX+1,currY,exitX,exitY);
     if (blockMaze[currY][currX+1].isPath === true) {
       swap(currX,currY,currX+1,currY);
       path.push([currX+1,currY]);
@@ -135,4 +139,9 @@ const swap = (currX,currY,x,y) => {
   document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor = "#FFFFFF";
   nextCell = document.querySelector(`#row-${y} #col-${x}`);
   nextCell.style.backgroundColor = "#0096FF";
+}
+
+const hasWon = (x,y,exitX,exitY) => {
+  if (x == exitX && y == exitY)
+    alert("Player has won");
 }

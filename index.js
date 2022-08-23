@@ -1,7 +1,3 @@
-// TILE OBJ CODE
-
-//
-
 // UTIL FUNC TO SHUFFLE AN ARRAY
 const shuffle = (arr) => {
   let counter = arr.length;
@@ -19,8 +15,8 @@ const shuffle = (arr) => {
 };
 
 // MAZE GENERATION AND RENDER CODE
-const row = 10;
-const col = 10;
+const row = 14;
+const col = 14;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -83,3 +79,16 @@ blockMaze.forEach((row, rowIndex) => {
 
 // logic to play the game
 //....
+let startX = Math.floor(Math.random() * (blockMaze[0].length - 1));
+let startY = Math.floor(Math.random() * (blockMaze.length - 1));
+
+while (!blockMaze[startX][startY]["isPath"]) {
+  startX = Math.floor(Math.random() * (blockMaze[0].length - 1));
+  startY = Math.floor(Math.random() * (blockMaze.length - 1));
+}
+
+console.log(startX);
+console.log(startY);
+
+const startCell = document.querySelector(`#row-${startX} #col-${startY}`);
+startCell.style.backgroundColor = "#0096FF";

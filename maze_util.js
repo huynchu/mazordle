@@ -1,3 +1,19 @@
+// UTIL FUNC TO SHUFFLE AN ARRAY
+const shuffle = (arr) => {
+  let counter = arr.length;
+
+  while (counter > 0) {
+    const index = Math.floor(Math.random() * counter);
+    counter--;
+
+    const temp = arr[counter];
+    arr[counter] = arr[index];
+    arr[index] = temp;
+
+    return arr;
+  }
+};
+
 const blockWise = (n, VW, HW) => {
   const row = 2 * n;
   const col = 2 * n;
@@ -102,10 +118,10 @@ const pickRandomEdgeTile = (maze) => {
   return [exitX, exitY];
 };
 
-const hasPath = (x,y,maze) => {
-  if (x != 0 && maze[y][x-1].isPath) return true;
-  if (x != maze.length-1 && maze[y][x+1].isPath) return true;
-  if (y != 0 && maze[y-1][x].isPath) return true;
-  if (y != maze.length-1 && maze[y+1][x].isPath) return true;
+const hasPath = (x, y, maze) => {
+  if (x != 0 && maze[y][x - 1].isPath) return true;
+  if (x != maze.length - 1 && maze[y][x + 1].isPath) return true;
+  if (y != 0 && maze[y - 1][x].isPath) return true;
+  if (y != maze.length - 1 && maze[y + 1][x].isPath) return true;
   return false;
-}
+};

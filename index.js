@@ -1,19 +1,3 @@
-// UTIL FUNC TO SHUFFLE AN ARRAY
-const shuffle = (arr) => {
-  let counter = arr.length;
-
-  while (counter > 0) {
-    const index = Math.floor(Math.random() * counter);
-    counter--;
-
-    const temp = arr[counter];
-    arr[counter] = arr[index];
-    arr[index] = temp;
-
-    return arr;
-  }
-};
-
 // MAZE GENERATION AND RENDER CODE
 const row = 8;
 const col = 8;
@@ -38,11 +22,8 @@ const startRow = Math.floor(Math.random() * row);
 const startCol = Math.floor(Math.random() * col);
 stepThroughCell(startRow, startCol);
 // convert to blockwise representation
-
 const blockMaze = blockWise(mazeArray.length, vertWalls, horzWalls);
 
-// loop thought mazeArray with each tile obj and render it in html, add an click event listener to each tile
-// ...
 // Creating tile obj
 blockMaze.forEach((row, rowIndex) => {
   row.forEach((isPath, colIndex) => {

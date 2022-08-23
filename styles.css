@@ -1,6 +1,8 @@
 .tile {
   width: 20px;
   height: 20px;
+  border: solid 0.05px;
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 .row {

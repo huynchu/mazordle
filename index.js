@@ -67,7 +67,7 @@ blockMaze.forEach((row, rowIndex) => {
     const tileDiv = document.createElement("div");
     tileDiv.id = `col-${colIndex}`;
     tileDiv.classList.add("tile");
-    tileDiv.style.backgroundColor = isPath === true ? "#FFFFFF" : "#000000";
+    tileDiv.style.backgroundColor = "#A4A4A4"; //isPath === true ? "#FFFFFF" : "#000000";
     rowDiv.appendChild(tileDiv);
   });
   root.appendChild(rowDiv);
@@ -82,61 +82,77 @@ while (!blockMaze[startY][startX]["isPath"]) {
   startX = Math.floor(Math.random() * (blockMaze[0].length - 1));
   startY = Math.floor(Math.random() * (blockMaze.length - 1));
 }
+
 let path = Array();
 let currCell = document.querySelector(`#row-${startY} #col-${startX}`);
-currCell.style.backgroundColor = "#0096FF";
+currCell.style.backgroundColor = "#FFFFFF";
 
 let [exitX, exitY] = pickRandomEdgeTile(blockMaze);
-while (!hasPath(exitX,exitY,blockMaze)) {
+while (!hasPath(exitX, exitY, blockMaze)) {
   [exitX, exitY] = pickRandomEdgeTile(blockMaze);
 }
 const exitTile = document.querySelector(`#row-${exitY} #col-${exitX}`);
 exitTile.style.backgroundColor = "#FFA500";
 blockMaze[exitY][exitX]["win"] = true;
 
-path.push([startX,startY]);
+path.push([startX, startY]);
 let currX = startX;
 let currY = startY;
-let nextCell;
-document.addEventListener('keydown', function(e) {
-  if(e.key === 'w') {
-    hasWon(currX,currY-1,exitX,exitY);
-    if (blockMaze[currY-1][currX].isPath === true) {
-      swap(currX,currY,currX,currY-1);
-      path.push([currX,currY-1]);
-      currY--;
-    }
-  }
-  else if(e.key === 'a') {
-    hasWon(currX-1,currY,exitX,exitY);
-    if (blockMaze[currY][currX-1].isPath === true) {
-      swap(currX,currY,currX-1,currY);
-      path.push([currX-1,currY]);
-      currX--;
-    }
 
-  }
-  else if(e.key === 's') {
+document.addEventListener("keydown", function (e) {
+  if (e.key === "w") {
+    hasWon(currX,currY-1,exitX,exitY);
+    if (blockMaze[currY - 1][currX].isPath === true) {
+      swap(currCell, currX, currY - 1);
+      path.push([currX, currY - 1]);
+      currY--;
+    } else {
+      document.querySelector(
+        `#row-${currY - 1} #col-${currX}`
+      ).style.backgroundColor = "#000";
+    }
+    currCell = document.querySelector(`#row-${currY} #col-${currX}`);
+  } else if (e.key === "a") {
+    hasWon(currX-1,currY,exitX,exitY);
+    if (blockMaze[currY][currX - 1].isPath === true) {
+      swap(currCell, currX - 1, currY);
+      path.push([currX - 1, currY]);
+      currX--;
+    } else {
+      document.querySelector(
+        `#row-${currY} #col-${currX - 1}`
+      ).style.backgroundColor = "#000";
+    }
+    currCell = document.querySelector(`#row-${currY} #col-${currX}`);
+  } else if (e.key === "s") {
     hasWon(currX,currY+1,exitX,exitY);
-    if (blockMaze[currY+1][currX].isPath === true) {
-      swap(currX,currY,currX,currY+1);
-      path.push([currX,currY+1]);
+    if (blockMaze[currY + 1][currX].isPath === true) {
+      swap(currCell, currX, currY + 1);
+      path.push([currX, currY + 1]);
       currY++;
+    } else {
+      document.querySelector(
+        `#row-${currY + 1} #col-${currX}`
+      ).style.backgroundColor = "#000";
     }
-  }
-  else if(e.key === 'd') {
+    currCell = document.querySelector(`#row-${currY} #col-${currX}`);
+  } else if (e.key === "d") {
     hasWon(currX+1,currY,exitX,exitY);
-    if (blockMaze[currY][currX+1].isPath === true) {
-      swap(currX,currY,currX+1,currY);
-      path.push([currX+1,currY]);
+    if (blockMaze[currY][currX + 1].isPath === true) {
+      swap(currCell, currX + 1, currY);
+      path.push([currX + 1, currY]);
       currX++;
+    } else {
+      document.querySelector(
+        `#row-${currY} #col-${currX + 1}`
+      ).style.backgroundColor = "#000";
     }
+    currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   }
 });
 
-
-const swap = (currX,currY,x,y) => {
-  document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor = "#FFFFFF";
+const swap = (currCell, x, y) => {
+  currCell.style.backgroundColor = "#FFFFFF";
   nextCell = document.querySelector(`#row-${y} #col-${x}`);
   nextCell.style.backgroundColor = "#0096FF";
 }
@@ -144,4 +160,5 @@ const swap = (currX,currY,x,y) => {
 const hasWon = (x,y,exitX,exitY) => {
   if (x == exitX && y == exitY)
     alert("Player has won");
+
 }

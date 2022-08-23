@@ -85,6 +85,13 @@ while (!blockMaze[startY][startX]["isPath"]) {
 let path = Array();
 let currCell = document.querySelector(`#row-${startY} #col-${startX}`);
 currCell.style.backgroundColor = "#0096FF";
+
+const [exitX, exitY] = pickRandomEdgeTile(blockMaze);
+
+const exitTile = document.querySelector(`#row-${exitY} #col-${exitX}`);
+exitTile.style.backgroundColor = "#FFA500";
+mazeArray[exitY][exitX]["win"] = true;
+
 path.push([startX,startY]);
 let currX = startX;
 let currY = startY;
@@ -117,7 +124,6 @@ document.addEventListener('keydown', function(e) {
       path.push([currX,currY+1]);
       currY++;
     }
-
   }
   else if(e.key === 'd') {
     if (blockMaze[currY][currX+1].isPath === true) {
@@ -127,6 +133,6 @@ document.addEventListener('keydown', function(e) {
       path.push([currX+1,currY]);
       currX++;
     }
-
   }
 });
+

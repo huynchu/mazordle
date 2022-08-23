@@ -72,3 +72,32 @@ const stepThroughCell = (currRow, currCol) => {
     stepThroughCell(nextRow, nextCol);
   }
 };
+
+// code to find exit tile
+const pickRandomEdgeTile = (maze) => {
+  const edges = ["left", "right", "top", "bottom"];
+  const randomEdge = edges[Math.floor(Math.random() * 4)];
+
+  let exitX;
+  let exitY;
+
+  switch (randomEdge) {
+    case "left":
+      exitX = 0;
+      exitY = Math.floor(Math.random() * (maze.length - 1));
+      break;
+    case "right":
+      exitX = maze.length - 1;
+      exitY = Math.floor(Math.random() * (maze.length - 1));
+      break;
+    case "top":
+      exitX = Math.floor(Math.random() * (maze.length - 1));
+      exitY = 0;
+      break;
+    case "bottom":
+      exitX = Math.floor(Math.random() * (maze.length - 1));
+      exitY = maze.length - 1;
+      break;
+  }
+  return [exitX, exitY];
+};

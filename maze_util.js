@@ -125,3 +125,26 @@ const hasPath = (x, y, maze) => {
   if (y != maze.length - 1 && maze[y + 1][x].isPath) return true;
   return false;
 };
+
+async function playPath(path, color, mazeArray) {
+  console.log(path);
+  for (let location of path) {
+    const [x, y] = location;
+    await reveal(x, y, mazeArray, color);
+  }
+}
+
+const reveal = (x, y, mazeArray, color) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (mazeArray[y][x]["isPath"]) {
+        document.querySelector(`#row-${y} #col-${x}`).style.backgroundColor =
+          color;
+      } else {
+        document.querySelector(`#row-${y} #col-${x}`).style.backgroundColor =
+          "#000";
+      }
+      resolve();
+    }, 200);
+  });
+};

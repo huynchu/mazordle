@@ -1,6 +1,6 @@
 // MAZE GENERATION AND RENDER CODE
-const row = 8;
-const col = 8;
+const row = 5;
+const col = 5;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -84,7 +84,7 @@ let currY = startY;
 
 document.addEventListener("keydown", function (e) {
   if (e.key === "w") {
-    hasWon(currX, currY - 1, exitX, exitY, blockMaze);
+    hasWon(currX, currY - 1, exitX, exitY, blockMaze, path);
     if (blockMaze[currY - 1][currX].isPath === true) {
       swap(currCell, currX, currY - 1);
       path.push([currX, currY - 1]);
@@ -96,7 +96,7 @@ document.addEventListener("keydown", function (e) {
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "a") {
-    hasWon(currX - 1, currY, exitX, exitY, blockMaze);
+    hasWon(currX - 1, currY, exitX, exitY, blockMaze, path);
     if (blockMaze[currY][currX - 1].isPath === true) {
       swap(currCell, currX - 1, currY);
       path.push([currX - 1, currY]);
@@ -108,7 +108,7 @@ document.addEventListener("keydown", function (e) {
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "s") {
-    hasWon(currX, currY + 1, exitX, exitY, blockMaze);
+    hasWon(currX, currY + 1, exitX, exitY, blockMaze, path);
     if (blockMaze[currY + 1][currX].isPath === true) {
       swap(currCell, currX, currY + 1);
       path.push([currX, currY + 1]);
@@ -120,7 +120,7 @@ document.addEventListener("keydown", function (e) {
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "d") {
-    hasWon(currX + 1, currY, exitX, exitY, blockMaze);
+    hasWon(currX + 1, currY, exitX, exitY, blockMaze, path);
     if (blockMaze[currY][currX + 1].isPath === true) {
       swap(currCell, currX + 1, currY);
       path.push([currX + 1, currY]);
@@ -140,7 +140,7 @@ const swap = (currCell, x, y) => {
   nextCell.style.backgroundColor = "#0096FF";
 };
 
-const hasWon = (x, y, exitX, exitY, maze) => {
+const hasWon = (x, y, exitX, exitY, maze, path) => {
   if (x == exitX && y == exitY) {
     for (let i = 0; i < maze.length; i++) {
       for (let j = 0; j < maze.length; j++) {
@@ -150,5 +150,7 @@ const hasWon = (x, y, exitX, exitY, maze) => {
           : (tmp.style.backgroundColor = "#000000");
       }
     }
+
+    playPath(path, "#0096FF", maze);
   }
 };

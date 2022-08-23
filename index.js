@@ -90,49 +90,52 @@ const [exitX, exitY] = pickRandomEdgeTile(blockMaze);
 
 const exitTile = document.querySelector(`#row-${exitY} #col-${exitX}`);
 exitTile.style.backgroundColor = "#FFA500";
-mazeArray[exitY][exitX]["win"] = true;
+blockMaze[exitY][exitX]["win"] = true;
 
-path.push([startX,startY]);
+path.push([startX, startY]);
 let currX = startX;
 let currY = startY;
 let nextCell;
-document.addEventListener('keydown', function(e) {
-  if(e.key === 'w') {
-    if (blockMaze[currY-1][currX].isPath === true) {
-      document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor = "#FFFFFF";
-      nextCell = document.querySelector(`#row-${currY-1} #col-${currX}`);
+document.addEventListener("keydown", function (e) {
+  if (e.key === "w") {
+    if (blockMaze[currY - 1][currX].isPath === true) {
+      document.querySelector(
+        `#row-${currY} #col-${currX}`
+      ).style.backgroundColor = "#FFFFFF";
+      nextCell = document.querySelector(`#row-${currY - 1} #col-${currX}`);
       nextCell.style.backgroundColor = "#0096FF";
-      path.push([currX,currY-1]);
+      path.push([currX, currY - 1]);
       currY--;
     }
-  }
-  else if(e.key === 'a') {
-    if (blockMaze[currY][currX-1].isPath === true) {
-      document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor = "#FFFFFF";
-      nextCell = document.querySelector(`#row-${currY} #col-${currX-1}`);
+  } else if (e.key === "a") {
+    if (blockMaze[currY][currX - 1].isPath === true) {
+      document.querySelector(
+        `#row-${currY} #col-${currX}`
+      ).style.backgroundColor = "#FFFFFF";
+      nextCell = document.querySelector(`#row-${currY} #col-${currX - 1}`);
       nextCell.style.backgroundColor = "#0096FF";
-      path.push([currX-1,currY]);
+      path.push([currX - 1, currY]);
       currX--;
     }
-
-  }
-  else if(e.key === 's') {
-    if (blockMaze[currY+1][currX].isPath === true) {
-      document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor = "#FFFFFF";
-      nextCell = document.querySelector(`#row-${currY+1} #col-${currX}`);
+  } else if (e.key === "s") {
+    if (blockMaze[currY + 1][currX].isPath === true) {
+      document.querySelector(
+        `#row-${currY} #col-${currX}`
+      ).style.backgroundColor = "#FFFFFF";
+      nextCell = document.querySelector(`#row-${currY + 1} #col-${currX}`);
       nextCell.style.backgroundColor = "#0096FF";
-      path.push([currX,currY+1]);
+      path.push([currX, currY + 1]);
       currY++;
     }
-  }
-  else if(e.key === 'd') {
-    if (blockMaze[currY][currX+1].isPath === true) {
-      document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor = "#FFFFFF";
-      nextCell = document.querySelector(`#row-${currY} #col-${currX+1}`);
+  } else if (e.key === "d") {
+    if (blockMaze[currY][currX + 1].isPath === true) {
+      document.querySelector(
+        `#row-${currY} #col-${currX}`
+      ).style.backgroundColor = "#FFFFFF";
+      nextCell = document.querySelector(`#row-${currY} #col-${currX + 1}`);
       nextCell.style.backgroundColor = "#0096FF";
-      path.push([currX+1,currY]);
+      path.push([currX + 1, currY]);
       currX++;
     }
   }
 });
-

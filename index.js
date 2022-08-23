@@ -37,10 +37,6 @@ const horzWalls = Array(row - 1)
 const startRow = Math.floor(Math.random() * row);
 const startCol = Math.floor(Math.random() * col);
 stepThroughCell(startRow, startCol);
-
-console.log(mazeArray);
-console.log(vertWalls);
-console.log(horzWalls);
 // convert to blockwise representation
 
 const blockMaze = blockWise(mazeArray.length, vertWalls, horzWalls);
@@ -82,13 +78,55 @@ blockMaze.forEach((row, rowIndex) => {
 let startX = Math.floor(Math.random() * (blockMaze[0].length - 1));
 let startY = Math.floor(Math.random() * (blockMaze.length - 1));
 
-while (!blockMaze[startX][startY]["isPath"]) {
+while (!blockMaze[startY][startX]["isPath"]) {
   startX = Math.floor(Math.random() * (blockMaze[0].length - 1));
   startY = Math.floor(Math.random() * (blockMaze.length - 1));
 }
+let path = Array();
+let currCell = document.querySelector(`#row-${startY} #col-${startX}`);
+currCell.style.backgroundColor = "#0096FF";
+path.push([startX,startY]);
+let currX = startX;
+let currY = startY;
+let nextCell;
+document.addEventListener('keydown', function(e) {
+  if(e.key === 'w') {
+    if (blockMaze[currY-1][currX].isPath === true) {
+      document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor = "#FFFFFF";
+      nextCell = document.querySelector(`#row-${currY-1} #col-${currX}`);
+      nextCell.style.backgroundColor = "#0096FF";
+      path.push([currX,currY-1]);
+      currY--;
+    }
+  }
+  else if(e.key === 'a') {
+    if (blockMaze[currY][currX-1].isPath === true) {
+      document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor = "#FFFFFF";
+      nextCell = document.querySelector(`#row-${currY} #col-${currX-1}`);
+      nextCell.style.backgroundColor = "#0096FF";
+      path.push([currX-1,currY]);
+      currX--;
+    }
 
-console.log(startX);
-console.log(startY);
+  }
+  else if(e.key === 's') {
+    if (blockMaze[currY+1][currX].isPath === true) {
+      document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor = "#FFFFFF";
+      nextCell = document.querySelector(`#row-${currY+1} #col-${currX}`);
+      nextCell.style.backgroundColor = "#0096FF";
+      path.push([currX,currY+1]);
+      currY++;
+    }
 
-const startCell = document.querySelector(`#row-${startX} #col-${startY}`);
-startCell.style.backgroundColor = "#0096FF";
+  }
+  else if(e.key === 'd') {
+    if (blockMaze[currY][currX+1].isPath === true) {
+      document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor = "#FFFFFF";
+      nextCell = document.querySelector(`#row-${currY} #col-${currX+1}`);
+      nextCell.style.backgroundColor = "#0096FF";
+      path.push([currX+1,currY]);
+      currX++;
+    }
+
+  }
+});

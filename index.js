@@ -55,7 +55,7 @@ blockMaze.forEach((row, rowIndex) => {
 });
 
 // logic to play the game
-//....
+// Generate random start location
 let startX = Math.floor(Math.random() * (blockMaze[0].length - 1));
 let startY = Math.floor(Math.random() * (blockMaze.length - 1));
 
@@ -68,6 +68,7 @@ let path = Array();
 let currCell = document.querySelector(`#row-${startY} #col-${startX}`);
 currCell.style.backgroundColor = "#0096FF";
 
+// Generate random exit/win tile
 let [exitX, exitY] = pickRandomEdgeTile(blockMaze);
 while (!hasPath(exitX, exitY, blockMaze)) {
   [exitX, exitY] = pickRandomEdgeTile(blockMaze);
@@ -76,6 +77,7 @@ const exitTile = document.querySelector(`#row-${exitY} #col-${exitX}`);
 exitTile.style.backgroundColor = "#FFA500";
 blockMaze[exitY][exitX]["win"] = true;
 
+// Start playing the game
 path.push([startX, startY]);
 let currX = startX;
 let currY = startY;

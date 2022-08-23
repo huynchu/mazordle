@@ -82,7 +82,7 @@ blockMaze.forEach((row, rowIndex) => {
 let startX = Math.floor(Math.random() * (blockMaze[0].length - 1));
 let startY = Math.floor(Math.random() * (blockMaze.length - 1));
 
-while (!blockMaze[startX][startY]["isPath"]) {
+while (!blockMaze[startY][startX]["isPath"]) {
   startX = Math.floor(Math.random() * (blockMaze[0].length - 1));
   startY = Math.floor(Math.random() * (blockMaze.length - 1));
 }
@@ -90,5 +90,39 @@ while (!blockMaze[startX][startY]["isPath"]) {
 console.log(startX);
 console.log(startY);
 
-const startCell = document.querySelector(`#row-${startX} #col-${startY}`);
+const startCell = document.querySelector(`#row-${startY} #col-${startX}`);
 startCell.style.backgroundColor = "#0096FF";
+
+// code to find exit tile
+const pickRandomEdgeTile = (maze) => {
+  const edges = ["left", "right", "top", "bottom"];
+  const randomEdge = edges[Math.floor(Math.random() * 4)];
+
+  let exitX;
+  let exitY;
+
+  switch (randomEdge) {
+    case "left":
+      exitX = 0;
+      exitY = Math.floor(Math.random() * (maze.length - 1));
+      break;
+    case "right":
+      exitX = maze.length - 1;
+      exitY = Math.floor(Math.random() * (maze.length - 1));
+      break;
+    case "top":
+      exitX = Math.floor(Math.random() * (maze.length - 1));
+      exitY = 0;
+      break;
+    case "bottom":
+      exitX = Math.floor(Math.random() * (maze.length - 1));
+      exitY = maze.length - 1;
+      break;
+  }
+  return [exitX, exitY];
+};
+
+const [exitX, exitY] = pickRandomEdgeTile(blockMaze);
+
+const exitTile = document.querySelector(`#row-${exitY} #col-${exitX}`);
+exitTile.style.backgroundColor = "#FFA500";

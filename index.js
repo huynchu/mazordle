@@ -99,46 +99,54 @@ path.push([startX, startY]);
 let currX = startX;
 let currY = startY;
 let nextCell;
+
 document.addEventListener("keydown", function (e) {
   if (e.key === "w") {
     if (blockMaze[currY - 1][currX].isPath === true) {
-      document.querySelector(
-        `#row-${currY} #col-${currX}`
-      ).style.backgroundColor = "#FFFFFF";
-      nextCell = document.querySelector(`#row-${currY - 1} #col-${currX}`);
-      nextCell.style.backgroundColor = "#0096FF";
+      swap(currX, currY, currX, currY - 1);
       path.push([currX, currY - 1]);
       currY--;
+    } else {
+      document.querySelector(
+        `#row-${currY - 1} #col-${currX}`
+      ).style.backgroundColor = "#000";
     }
   } else if (e.key === "a") {
     if (blockMaze[currY][currX - 1].isPath === true) {
-      document.querySelector(
-        `#row-${currY} #col-${currX}`
-      ).style.backgroundColor = "#FFFFFF";
-      nextCell = document.querySelector(`#row-${currY} #col-${currX - 1}`);
-      nextCell.style.backgroundColor = "#0096FF";
+      swap(currX, currY, currX - 1, currY);
       path.push([currX - 1, currY]);
       currX--;
+    } else {
+      document.querySelector(
+        `#row-${currY} #col-${currX - 1}`
+      ).style.backgroundColor = "#000";
     }
   } else if (e.key === "s") {
     if (blockMaze[currY + 1][currX].isPath === true) {
-      document.querySelector(
-        `#row-${currY} #col-${currX}`
-      ).style.backgroundColor = "#FFFFFF";
-      nextCell = document.querySelector(`#row-${currY + 1} #col-${currX}`);
-      nextCell.style.backgroundColor = "#0096FF";
+      swap(currX, currY, currX, currY + 1);
       path.push([currX, currY + 1]);
       currY++;
+    } else {
+      document.querySelector(
+        `#row-${currY + 1} #col-${currX}`
+      ).style.backgroundColor = "#000";
     }
   } else if (e.key === "d") {
     if (blockMaze[currY][currX + 1].isPath === true) {
-      document.querySelector(
-        `#row-${currY} #col-${currX}`
-      ).style.backgroundColor = "#FFFFFF";
-      nextCell = document.querySelector(`#row-${currY} #col-${currX + 1}`);
-      nextCell.style.backgroundColor = "#0096FF";
+      swap(currX, currY, currX + 1, currY);
       path.push([currX + 1, currY]);
       currX++;
+    } else {
+      document.querySelector(
+        `#row-${currY} #col-${currX + 1}`
+      ).style.backgroundColor = "#000";
     }
   }
 });
+
+const swap = (currX, currY, x, y) => {
+  document.querySelector(`#row-${currY} #col-${currX}`).style.backgroundColor =
+    "#FFFFFF";
+  nextCell = document.querySelector(`#row-${y} #col-${x}`);
+  nextCell.style.backgroundColor = "#0096FF";
+};

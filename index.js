@@ -126,3 +126,4 @@ const [exitX, exitY] = pickRandomEdgeTile(blockMaze);
 
 const exitTile = document.querySelector(`#row-${exitY} #col-${exitX}`);
 exitTile.style.backgroundColor = "#FFA500";
+mazeArray[exitY][exitX]["win"] = true;

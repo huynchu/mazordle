@@ -101,3 +101,11 @@ const pickRandomEdgeTile = (maze) => {
   }
   return [exitX, exitY];
 };
+
+const hasPath = (x,y,maze) => {
+  if (x != 0 && maze[y][x-1].isPath) return true;
+  if (x != maze.length-1 && maze[y][x+1].isPath) return true;
+  if (y != 0 && maze[y-1][x].isPath) return true;
+  if (y != maze.length-1 && maze[y+1][x].isPath) return true;
+  return false;
+}

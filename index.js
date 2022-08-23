@@ -86,8 +86,10 @@ let path = Array();
 let currCell = document.querySelector(`#row-${startY} #col-${startX}`);
 currCell.style.backgroundColor = "#0096FF";
 
-const [exitX, exitY] = pickRandomEdgeTile(blockMaze);
-
+let [exitX, exitY] = pickRandomEdgeTile(blockMaze);
+while (!hasPath(exitX,exitY,blockMaze)) {
+  [exitX, exitY] = pickRandomEdgeTile(blockMaze);
+}
 const exitTile = document.querySelector(`#row-${exitY} #col-${exitX}`);
 exitTile.style.backgroundColor = "#FFA500";
 blockMaze[exitY][exitX]["win"] = true;

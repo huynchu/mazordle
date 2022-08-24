@@ -128,8 +128,18 @@ const hasPath = (x, y, maze) => {
 
 async function playPath(path, color, mazeArray) {
   console.log(path);
+
   for (let location of path) {
     const [x, y] = location;
+    await reveal(x, y, mazeArray, color);
+  }
+}
+
+async function playPathV2(path, color, mazeArray) {
+  console.log(path);
+
+  for (let location of path) {
+    const { x, y } = location;
     await reveal(x, y, mazeArray, color);
   }
 }

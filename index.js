@@ -84,13 +84,8 @@ let currY = startY;
 
 document.addEventListener("keydown", function (e) {
   if (e.key === "w") {
-<<<<<<< Updated upstream
     hasWon(currX, currY - 1, exitX, exitY, blockMaze, path);
-    if (blockMaze[currY - 1][currX].isPath === true) {
-=======
-    hasWon(currX, currY - 1, exitX, exitY, blockMaze);
     if (blockMaze[currY - 1][currX].isPath) {
->>>>>>> Stashed changes
       swap(currCell, currX, currY - 1);
       path.push([currX, currY - 1]);
       currY--;
@@ -101,13 +96,8 @@ document.addEventListener("keydown", function (e) {
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "a") {
-<<<<<<< Updated upstream
     hasWon(currX - 1, currY, exitX, exitY, blockMaze, path);
-    if (blockMaze[currY][currX - 1].isPath === true) {
-=======
-    hasWon(currX - 1, currY, exitX, exitY, blockMaze);
     if (blockMaze[currY][currX - 1].isPath) {
->>>>>>> Stashed changes
       swap(currCell, currX - 1, currY);
       path.push([currX - 1, currY]);
       currX--;
@@ -118,13 +108,8 @@ document.addEventListener("keydown", function (e) {
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "s") {
-<<<<<<< Updated upstream
     hasWon(currX, currY + 1, exitX, exitY, blockMaze, path);
-    if (blockMaze[currY + 1][currX].isPath === true) {
-=======
-    hasWon(currX, currY + 1, exitX, exitY, blockMaze);
     if (blockMaze[currY + 1][currX].isPath) {
->>>>>>> Stashed changes
       swap(currCell, currX, currY + 1);
       path.push([currX, currY + 1]);
       currY++;
@@ -135,13 +120,8 @@ document.addEventListener("keydown", function (e) {
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "d") {
-<<<<<<< Updated upstream
     hasWon(currX + 1, currY, exitX, exitY, blockMaze, path);
-    if (blockMaze[currY][currX + 1].isPath === true) {
-=======
-    hasWon(currX + 1, currY, exitX, exitY, blockMaze);
     if (blockMaze[currY][currX + 1].isPath) {
->>>>>>> Stashed changes
       swap(currCell, currX + 1, currY);
       path.push([currX + 1, currY]);
       currX++;
@@ -151,9 +131,8 @@ document.addEventListener("keydown", function (e) {
       ).style.backgroundColor = "#000";
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
-  }
-  else if (e.key === "e") {
-    solveDFS(startX,startY,exitX,exitY,blockMaze);
+  } else if (e.key === "e") {
+    solveDFS(startX, startY, exitX, exitY, blockMaze);
     //console.log(s);
   }
 });
@@ -167,6 +146,7 @@ const swap = (currCell, x, y) => {
 const hasWon = (x, y, exitX, exitY, maze, path) => {
   if (x == exitX && y == exitY) {
     boardClear(maze);
+    playPath(path, "#0096FF", maze);
   }
 };
 
@@ -179,58 +159,55 @@ const boardClear = (maze) => {
         : (tmp.style.backgroundColor = "#000000");
     }
   }
-}
-function Pt(x,y) {
+};
+function Pt(x, y) {
   this.x = x;
   this.y = y;
 }
-const solveDFS = (x,y,ex,ey,maze) => {
-  let c = new Pt(x,y);
-  let e = new Pt(ex,ey);
+const solveDFS = (x, y, ex, ey, maze) => {
+  let c = new Pt(x, y);
+  let e = new Pt(ex, ey);
   let stack = Array().map(() => Array());
   stack.push(Array(c));
   let v = Array();
   while (stack.length != 0) {
     let path = stack.pop();
-    let curr = path[path.length-1];
+    let curr = path[path.length - 1];
     console.log("p:");
     console.log(path);
     console.log("curr:");
     console.log(curr);
-    if (!contains(curr,v)) v.push(curr);
+    if (!contains(curr, v)) v.push(curr);
     if (curr.x === e.x && curr.y === e.y) return path;
-    let tmp = neighbors(curr.x,curr.y,maze);
+    let tmp = neighbors(curr.x, curr.y, maze);
     for (let i = 0; i < tmp.length; i++) {
       console.log("tmp[" + i + "]:");
       console.log(tmp[i]);
-      if(!contains(tmp[i],path)) {
+      if (!contains(tmp[i], path)) {
         let newPath = [...path];
-        newPath.push(new Pt(tmp[i].x,tmp[i].y));
+        newPath.push(new Pt(tmp[i].x, tmp[i].y));
         console.log(newPath);
         stack.push(newPath);
       }
     }
-
-    playPath(path, "#0096FF", maze);
+    playPathV2(path, "#0096FF", maze);
   }
   console.log("hey");
   return [];
+};
 
-}
-
-const contains = (point,stack) => {
+const contains = (point, stack) => {
   for (let i = 0; i < stack.length; i++) {
     if (point.x === stack[i].x && point.y === stack[i].y) return true;
   }
   return false;
-}
+};
 
-
-const neighbors = (x,y,maze) => {
+const neighbors = (x, y, maze) => {
   let tmp = Array().map(() => Array());
-  if (maze[y][x-1].isPath) tmp.push(new Pt(x-1,y));
-  if (maze[y][x+1].isPath) tmp.push(new Pt(x+1,y));
-  if (maze[y-1][x].isPath) tmp.push(new Pt(x,y-1));
-  if (maze[y+1][x].isPath) tmp.push(new Pt(x,y+1));
+  if (maze[y][x - 1].isPath) tmp.push(new Pt(x - 1, y));
+  if (maze[y][x + 1].isPath) tmp.push(new Pt(x + 1, y));
+  if (maze[y - 1][x].isPath) tmp.push(new Pt(x, y - 1));
+  if (maze[y + 1][x].isPath) tmp.push(new Pt(x, y + 1));
   return tmp;
-}
+};

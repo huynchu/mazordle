@@ -76,6 +76,7 @@ while (!hasPath(exitX, exitY, blockMaze)) {
 const exitTile = document.querySelector(`#row-${exitY} #col-${exitX}`);
 exitTile.style.backgroundColor = "#FFA500";
 blockMaze[exitY][exitX]["win"] = true;
+blockMaze[exitY][exitX].isPath = true;
 
 // Start playing the game
 path.push([startX, startY]);
@@ -132,8 +133,9 @@ document.addEventListener("keydown", function (e) {
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "e") {
-    solveDFS(startX, startY, exitX, exitY, blockMaze);
-    //console.log(s);
+    let s = solveDFS(startX, startY, exitX, exitY, blockMaze);
+    setTimeout (() => {playPathV2(s, "#B65FCF", blockMaze);}, 1000);
+    
   }
 });
 
@@ -173,26 +175,29 @@ const solveDFS = (x, y, ex, ey, maze) => {
   while (stack.length != 0) {
     let path = stack.pop();
     let curr = path[path.length - 1];
-    console.log("p:");
-    console.log(path);
-    console.log("curr:");
-    console.log(curr);
     if (!contains(curr, v)) v.push(curr);
-    if (curr.x === e.x && curr.y === e.y) return path;
+    if (equals(curr,e)) {
+      clearArray(stack);
+      return path;
+    }
     let tmp = neighbors(curr.x, curr.y, maze);
     for (let i = 0; i < tmp.length; i++) {
-      console.log("tmp[" + i + "]:");
-      console.log(tmp[i]);
-      if (!contains(tmp[i], path)) {
+      if (equals(tmp[i],e)) {
+        path.push(new Pt(tmp[i].x,tmp[i].y));
+        clearArray(stack);
+        playPathV2(path, "#0096FF", maze);
+        return path;
+      }
+    }
+    for (let i = 0; i < tmp.length; i++) {
+      if (!contains(tmp[i], v)) {
         let newPath = [...path];
         newPath.push(new Pt(tmp[i].x, tmp[i].y));
-        console.log(newPath);
         stack.push(newPath);
       }
     }
     playPathV2(path, "#0096FF", maze);
   }
-  console.log("hey");
   return [];
 };
 
@@ -202,6 +207,13 @@ const contains = (point, stack) => {
   }
   return false;
 };
+const clearArray = (a) => {
+  for (let i = 0; i < a.length; i++) a.pop();
+}
+
+const equals = (p1,p2) => {
+  return (p1.x === p2.x && p1.y === p2.y);
+}
 
 const neighbors = (x, y, maze) => {
   let tmp = Array().map(() => Array());

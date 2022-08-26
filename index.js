@@ -1,8 +1,14 @@
 // MAZE GENERATION AND RENDER CODE
-const row = 5;
-const col = 5;
+const row = 10;
+const col = 10;
 const width = window.innerWidth;
 const height = window.innerHeight;
+const mbck = "#a28076";
+const mwal = "#512D42";
+const mext = "#ebc9ad";
+const mvis = mext;
+const mply = "#C0A38B";
+const mfin = "#dab596";
 
 const mazeArray = Array(row)
   .fill(null)
@@ -48,7 +54,7 @@ blockMaze.forEach((row, rowIndex) => {
     const tileDiv = document.createElement("div");
     tileDiv.id = `col-${colIndex}`;
     tileDiv.classList.add("tile");
-    tileDiv.style.backgroundColor = "#A4A4A4"; //isPath === true ? "#FFFFFF" : "#000000";
+    tileDiv.style.backgroundColor = mbck; //isPath === true ? "#FFFFFF" : "#000000";
     rowDiv.appendChild(tileDiv);
   });
   root.appendChild(rowDiv);
@@ -66,7 +72,7 @@ while (!blockMaze[startY][startX]["isPath"]) {
 
 let path = Array();
 let currCell = document.querySelector(`#row-${startY} #col-${startX}`);
-currCell.style.backgroundColor = "#0096FF";
+currCell.style.backgroundColor = mply;
 
 // Generate random exit/win tile
 let [exitX, exitY] = pickRandomEdgeTile(blockMaze);
@@ -74,7 +80,7 @@ while (!hasPath(exitX, exitY, blockMaze)) {
   [exitX, exitY] = pickRandomEdgeTile(blockMaze);
 }
 const exitTile = document.querySelector(`#row-${exitY} #col-${exitX}`);
-exitTile.style.backgroundColor = "#FFA500";
+exitTile.style.backgroundColor = mext;
 blockMaze[exitY][exitX]["win"] = true;
 blockMaze[exitY][exitX].isPath = true;
 
@@ -93,7 +99,7 @@ document.addEventListener("keydown", function (e) {
     } else {
       document.querySelector(
         `#row-${currY - 1} #col-${currX}`
-      ).style.backgroundColor = "#000";
+      ).style.backgroundColor = mwal;
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "a") {
@@ -105,7 +111,7 @@ document.addEventListener("keydown", function (e) {
     } else {
       document.querySelector(
         `#row-${currY} #col-${currX - 1}`
-      ).style.backgroundColor = "#000";
+      ).style.backgroundColor = mwal;
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "s") {
@@ -117,7 +123,7 @@ document.addEventListener("keydown", function (e) {
     } else {
       document.querySelector(
         `#row-${currY + 1} #col-${currX}`
-      ).style.backgroundColor = "#000";
+      ).style.backgroundColor = mwal;
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "d") {
@@ -129,26 +135,27 @@ document.addEventListener("keydown", function (e) {
     } else {
       document.querySelector(
         `#row-${currY} #col-${currX + 1}`
-      ).style.backgroundColor = "#000";
+      ).style.backgroundColor = mwal;
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "e") {
+    boardCover(startX, startY, exitTile,blockMaze);
     let s = solveDFS(startX, startY, exitX, exitY, blockMaze);
-    setTimeout (() => {playPathV2(s, "#B65FCF", blockMaze);}, 1000);
+    setTimeout (() => {playPathV2(s, mfin, blockMaze);}, 1000);
     
   }
 });
 
 const swap = (currCell, x, y) => {
-  currCell.style.backgroundColor = "#FFFFFF";
+  currCell.style.backgroundColor = mvis;
   nextCell = document.querySelector(`#row-${y} #col-${x}`);
-  nextCell.style.backgroundColor = "#0096FF";
+  nextCell.style.backgroundColor = mply;
 };
 
 const hasWon = (x, y, exitX, exitY, maze, path) => {
   if (x == exitX && y == exitY) {
     boardClear(maze);
-    playPath(path, "#0096FF", maze);
+    playPath(path, mply, maze);
   }
 };
 
@@ -157,10 +164,20 @@ const boardClear = (maze) => {
     for (let j = 0; j < maze.length; j++) {
       let tmp = document.querySelector(`#row-${i} #col-${j}`);
       maze[i][j].isPath
-        ? (tmp.style.backgroundColor = "#FFFFFF")
-        : (tmp.style.backgroundColor = "#000000");
+        ? (tmp.style.backgroundColor = mvis)
+        : (tmp.style.backgroundColor = mwal);
     }
   }
+};
+const boardCover = (startX,startY, exit, maze) => {
+  for (let i = 0; i < maze.length; i++) {
+    for (let j = 0; j < maze.length; j++) {
+      if (i === startY && j === startX) continue;
+      let tmp = document.querySelector(`#row-${i} #col-${j}`);
+      tmp.style.backgroundColor = mbck; 
+    }
+  }
+  exit.style.backgroundColor = mext;
 };
 function Pt(x, y) {
   this.x = x;
@@ -185,7 +202,7 @@ const solveDFS = (x, y, ex, ey, maze) => {
       if (equals(tmp[i],e)) {
         path.push(new Pt(tmp[i].x,tmp[i].y));
         clearArray(stack);
-        playPathV2(path, "#0096FF", maze);
+        playPathV2(path, mply, maze);
         return path;
       }
     }
@@ -193,10 +210,10 @@ const solveDFS = (x, y, ex, ey, maze) => {
       if (!contains(tmp[i], v)) {
         let newPath = [...path];
         newPath.push(new Pt(tmp[i].x, tmp[i].y));
-        stack.push(newPath);
+        stack.unshift(newPath);
       }
     }
-    playPathV2(path, "#0096FF", maze);
+    playPathV2(path, mply, maze);
   }
   return [];
 };

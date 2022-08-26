@@ -1,3 +1,29 @@
+
+.title {
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: 90pt;
+  letter-spacing: 3px;
+  color: #C0A38B;
+  text-shadow: -1px 1px 0px #ebc9ad,
+  3px 3px 0px #ebc9ad,
+  1px -1px 0px #ebc9ad,
+  -1px -1px 0px #ebc9ad;
+}
+.title span:hover {
+  transition: transform 275ms ease;
+  font-weight: bold;
+  color: #ebc9ad;
+}
+
+.title span {
+  text-align: center;
+  color:#C0A38B;
+}
+
 .tile {
   width: 20px;
   height: 20px;
@@ -26,5 +52,5 @@ li {
 .container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center
 }

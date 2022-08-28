@@ -139,10 +139,11 @@ document.addEventListener("keydown", function (e) {
     }
     currCell = document.querySelector(`#row-${currY} #col-${currX}`);
   } else if (e.key === "e") {
-    boardCover(startX, startY, exitTile,blockMaze);
+    boardCover(startX, startY, exitTile, blockMaze);
     let s = solveDFS(startX, startY, exitX, exitY, blockMaze);
-    setTimeout (() => {playPathV2(s, mfin, blockMaze);}, 1000);
-    
+    setTimeout(() => {
+      playPathV2(s, mfin, blockMaze);
+    }, 1000);
   }
 });
 
@@ -169,12 +170,12 @@ const boardClear = (maze) => {
     }
   }
 };
-const boardCover = (startX,startY, exit, maze) => {
+const boardCover = (startX, startY, exit, maze) => {
   for (let i = 0; i < maze.length; i++) {
     for (let j = 0; j < maze.length; j++) {
       if (i === startY && j === startX) continue;
       let tmp = document.querySelector(`#row-${i} #col-${j}`);
-      tmp.style.backgroundColor = mbck; 
+      tmp.style.backgroundColor = mbck;
     }
   }
   exit.style.backgroundColor = mext;
@@ -193,14 +194,14 @@ const solveDFS = (x, y, ex, ey, maze) => {
     let path = stack.pop();
     let curr = path[path.length - 1];
     if (!contains(curr, v)) v.push(curr);
-    if (equals(curr,e)) {
+    if (equals(curr, e)) {
       clearArray(stack);
       return path;
     }
     let tmp = neighbors(curr.x, curr.y, maze);
     for (let i = 0; i < tmp.length; i++) {
-      if (equals(tmp[i],e)) {
-        path.push(new Pt(tmp[i].x,tmp[i].y));
+      if (equals(tmp[i], e)) {
+        path.push(new Pt(tmp[i].x, tmp[i].y));
         clearArray(stack);
         playPathV2(path, mply, maze);
         return path;
@@ -226,11 +227,11 @@ const contains = (point, stack) => {
 };
 const clearArray = (a) => {
   for (let i = 0; i < a.length; i++) a.pop();
-}
+};
 
-const equals = (p1,p2) => {
-  return (p1.x === p2.x && p1.y === p2.y);
-}
+const equals = (p1, p2) => {
+  return p1.x === p2.x && p1.y === p2.y;
+};
 
 const neighbors = (x, y, maze) => {
   let tmp = Array().map(() => Array());
@@ -240,3 +241,12 @@ const neighbors = (x, y, maze) => {
   if (maze[y + 1][x].isPath) tmp.push(new Pt(x, y + 1));
   return tmp;
 };
+
+const btn = document.querySelector("#solver");
+btn.addEventListener("click", function () {
+  boardCover(startX, startY, exitTile, blockMaze);
+  let s = solveDFS(startX, startY, exitX, exitY, blockMaze);
+  setTimeout(() => {
+    playPathV2(s, mfin, blockMaze);
+  }, 1000);
+});

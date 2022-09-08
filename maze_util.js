@@ -155,6 +155,6 @@ const reveal = (x, y, mazeArray, color) => {
           "#000";
       }
       resolve();
-    }, 200);
+    }, 145);
   });
 };

@@ -1,14 +1,14 @@
 // MAZE GENERATION AND RENDER CODE
-const row = 10;
-const col = 10;
+const row = 7;
+const col = 7;
 const width = window.innerWidth;
 const height = window.innerHeight;
-const mbck = "#a28076";
+const mbck = "#a28080";
 const mwal = "#512D42";
 const mext = "#ebc9ad";
 const mvis = mext;
-const mply = "#C0A38B";
-const mfin = "#dab596";
+const mply = "#68a5cc";
+const mfin = "#f7966d";
 
 const mazeArray = Array(row)
   .fill(null)
@@ -185,6 +185,7 @@ function Pt(x, y) {
   this.y = y;
 }
 const solveDFS = (x, y, ex, ey, maze) => {
+  boardClear(maze);
   let c = new Pt(x, y);
   let e = new Pt(ex, ey);
   let stack = Array().map(() => Array());

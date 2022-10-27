@@ -1,17 +1,14 @@
-
 .title {
   text-align: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin: 0;
   text-transform: uppercase;
   font-weight: 900;
-  font-size: 90pt;
+  font-size: 60pt;
   letter-spacing: 3px;
-  color: #C0A38B;
-  text-shadow: -1px 1px 0px #ebc9ad,
-  3px 3px 0px #ebc9ad,
-  1px -1px 0px #ebc9ad,
-  -1px -1px 0px #ebc9ad;
+  color: #c0a38b;
+  text-shadow: -1px 1px 0px #ebc9ad, 3px 3px 0px #ebc9ad, 1px -1px 0px #ebc9ad,
+    -1px -1px 0px #ebc9ad;
 }
 .title span:hover {
   transition: transform 275ms ease;
@@ -21,7 +18,7 @@
 
 .title span {
   text-align: center;
-  color:#C0A38B;
+  color: #c0a38b;
 }
 
 .tile {
@@ -29,6 +26,7 @@
   height: 20px;
   border: solid 1px;
   border-color: rgba(0, 0, 0, 0.1);
+  transition: 0.2s;
 }
 
 .row {
@@ -52,5 +50,26 @@ li {
 .container {
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
+}
+
+.button {
+  display: block;
+  width: 125px;
+  height: 30px;
+  border-radius: 18px;
+  background-color: #1c89ff;
+  border: solid 1px transparent;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.button:hover {
+  background-color: transparent;
+  border-color: rgb(0, 0, 0);
+  color: black;
+  transition: all 0.1s ease-in-out;
 }
